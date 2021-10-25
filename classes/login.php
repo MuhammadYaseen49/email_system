@@ -12,7 +12,7 @@ class login{
  	//FILTER EMAIL ADDRESS
  	function test_email($emails){
          if(empty($emails)){
-			return null;
+			return null; 
 		}else{
             $email = filter_var($emails, FILTER_SANITIZE_EMAIL);
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -43,11 +43,11 @@ class login{
         $stmt->execute();
         if($stmt->rowCount()){
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $check_password = password_verify($this->password, $row['password']);
+            // $check_password = password_verify($this->password, $row['password']);
 
             // VERIFYING THE PASSWORD (IS CORRECT OR NOT?)
             // IF PASSWORD IS CORRECT THEN SEND THE LOGIN TOKEN
-            if($check_password){
+            if($this->password == $row['password']){
 
                 $jwt = new JwtHandler();
                 $token = $jwt->_jwt_encode_data(
